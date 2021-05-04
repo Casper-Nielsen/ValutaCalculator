@@ -46,11 +46,13 @@
         app:layout_constraintGuide_percent="0.75"/>
 
     <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/value_Spinner"
+        android:id="@+id/from_value_Spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="75dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_top_horizontal"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_left_vertical" />
+        app:layout_constraintStart_toEndOf="@+id/editTextNumberDecimal" />
+
     <EditText
         android:id="@+id/editTextNumberDecimal"
         android:layout_width="wrap_content"
@@ -58,7 +60,25 @@
         android:ems="10"
         android:inputType="numberDecimal"
         app:layout_constraintBottom_toTopOf="@+id/guideline_top_horizontal"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_center_vertical"
         app:layout_constraintStart_toStartOf="@+id/guideline_left_vertical" />
 
+    <EditText
+        android:id="@+id/output_editTextNumberDecimal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_center_horizontal"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_center_vertical"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left_vertical" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/to_value_Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="75dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_center_horizontal"
+        app:layout_constraintStart_toEndOf="@+id/output_editTextNumberDecimal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
