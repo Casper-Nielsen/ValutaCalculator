@@ -7,6 +7,6 @@ package com.example.valutacalculator;
  *@version 1.0
  *@since 1.0
  */
-public interface ValutaStatusGetter {
-    Valuta getStatus();
+public interface CurrencyDAO<T> {
+    T getRates();
 }

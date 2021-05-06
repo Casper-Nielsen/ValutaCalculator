@@ -4,30 +4,35 @@ package com.example.valutacalculator;
  * This class converts from one value to another
  *
  * @author CKN
- * @version 1.2
+ * @version 1.1
  * @since 1.0
  */
-public class ValutaCalculator {
-    private double fromValue;
-    private double toValue;
+public class ValutaCalculator implements ValutaConverter {
 
-    public void setFromValue(double value){
-        fromValue = value;
-    }
-    public void setToValue(double value){
-        toValue = value;
+    /**
+     * Method that converts the value
+     *
+     * @version 1.1
+     * @since 1.1
+     * @param value the value that will be converted
+     * @return the converted value
+     */
+    private double calculate(double value, double fromValuta, double toValuta){
+        double commonValue = value/fromValuta;
+        return commonValue*toValuta;
     }
 
     /**
      * Method that converts the value
      *
-     * @version 1.0
+     * @version 1.1
      * @since 1.0
-     * @param value the value that will be converted
+     * @param value the valuta object that will have its value converted
      * @return the converted value
      */
-    public double convert(double value){
-        double commonValue = value/fromValue;
-        return commonValue*toValue;
+    @Override
+    public ConvertedValuta convert(ConvertedValuta value) {
+        value.setToValue(calculate(value.getFromValue(),value.getFromValutaDouble(),value.getToValutaDouble()));
+        return value;
     }
 }

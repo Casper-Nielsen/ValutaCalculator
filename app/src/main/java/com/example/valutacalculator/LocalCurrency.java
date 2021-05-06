@@ -10,7 +10,7 @@ import org.json.JSONObject;
  *@version 1.0
  *@since 1.0
  */
-public class LocalValutaGetter implements ValutaStatusGetter {
+public class LocalCurrency implements CurrencyDAO<Valuta> {
 
     /**
      * Method that gets the status
@@ -19,7 +19,7 @@ public class LocalValutaGetter implements ValutaStatusGetter {
      *@since 1.0
      */
     @Override
-    public Valuta getStatus() {
+    public Valuta getRates() {
         Valuta valuta = new Valuta();
         try {
             JSONObject jsonObject = new JSONObject(getJsonString());

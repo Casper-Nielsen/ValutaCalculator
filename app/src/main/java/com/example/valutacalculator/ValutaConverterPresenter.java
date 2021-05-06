@@ -1,6 +1,8 @@
 package com.example.valutacalculator;
 
 
+import java.util.List;
+
 /**
  * This class is a presenter
  * for the Valuta converter
@@ -11,16 +13,18 @@ package com.example.valutacalculator;
  */
 public class ValutaConverterPresenter {
     private ValutaCalculator converter;
+    private List<ConvertedValuta> history;
+    private ConvertedValuta current;
     private View view;
     private double value;
     private Valuta valuta;
-    private ValutaStatusGetter valutaStatusGetter;
+    private CurrencyDAO<Valuta> currencyDAO;
 
 
     private Valuta getValuta(){
 
         if (valuta == null){
-            valuta = valutaStatusGetter.getStatus();
+            valuta = currencyDAO.getRates();
         }
         return valuta;
     }
@@ -34,44 +38,45 @@ public class ValutaConverterPresenter {
      */
     public  ValutaConverterPresenter(View view){
         this.view = view;
-        this.valutaStatusGetter = new LocalValutaGetter();
+        this.currencyDAO = new LocalCurrency();
         this.converter = new ValutaCalculator();
+        this.current = new ConvertedValuta();
     }
 
     /**
      * Method that sets the input Valuta type
      *
-     *@version 1.0
+     *@version 1.1
      *@since 1.0
      *@param valutaType the new Valuta that will be converted from
      */
     public void changeSelectedInput(String valutaType){
-        converter.setFromValue(getValuta().rates.get(valutaType));
-        view.onConvertedValueUpdate(converter.convert(value));
+        current.setFromValutaDouble(getValuta().rates.get(valutaType));
+        current.setFromValuta(valutaType);
     }
 
     /**
      * Method that sets the output Valuta type
      *
-     *@version 1.0
+     *@version 1.1
      *@since 1.0
      *@param valutaType the new Valuta that will be converted to
      */
     public void changeSelectedOutput(String valutaType){
-        converter.setToValue(getValuta().rates.get(valutaType));
-        view.onConvertedValueUpdate(converter.convert(value));
+        current.setToValutaDouble(getValuta().rates.get(valutaType));
+        current.setToValuta(valutaType);
     }
 
     /**
      * Method that converts the input to the new valutatype
      *
-     *@version 1.0
-     *@since 1.0
+     *@version 1.1
+     *@since 1.1
      *@param input the value that will be converted
      */
-    public void onInputChanged(double input){
-        value = input;
-        view.onConvertedValueUpdate(converter.convert(value));
+    public void convertValue(double input){
+        current.setFromValue(input);
+        view.onConvertedValueUpdate(converter.convert(current));
     }
 
     /**
@@ -82,6 +87,6 @@ public class ValutaConverterPresenter {
      *@since 1.0
      */
     interface View{
-        void onConvertedValueUpdate(double value);
+        void onConvertedValueUpdate(ConvertedValuta value);
     }
 }

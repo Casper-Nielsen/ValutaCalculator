@@ -9,11 +9,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 /**
  * Activity for loading layout resources
@@ -29,34 +33,24 @@ public class MainActivity extends AppCompatActivity implements SpinnerListener.S
     private SpinnerListener fromSpinner;
     private SpinnerListener toSpinner;
     private ValutaConverterPresenter presenter;
+    private ValutaAdapter valutaAdapter;
+
+    ArrayList<ConvertedValuta> ConvertedArray = new ArrayList<ConvertedValuta>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         fromSpinner = new SpinnerListener(this,1);
         toSpinner = new SpinnerListener(this,2);
         presenter = new ValutaConverterPresenter(this);
-        // Start listening to editText on text changed
-        ((EditText)findViewById(R.id.editTextNumberDecimal)).addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() != 0)
-                    presenter.onInputChanged(Double.parseDouble(s.toString()));
-                else
-                    presenter.onInputChanged(0);
-
-            }
-        });
         setAdapter();
+
+        valutaAdapter = new ValutaAdapter(this, ConvertedArray);
+
+        ListView listView = findViewById(R.id.list_view);
+        listView.setAdapter(valutaAdapter);
     }
 
     /**
@@ -84,6 +78,19 @@ public class MainActivity extends AppCompatActivity implements SpinnerListener.S
     }
 
     /**
+     * Method to Take input and convert to selected output
+     *
+     *@version 1.0
+     *@since 1.0
+     */
+    public void onConvertButtonClicked(View view){
+        String input =  ((EditText)findViewById(R.id.editTextNumberDecimal)).getText().toString();
+        if(input.equals(""))
+            input = "0";
+        presenter.convertValue(Double.parseDouble(input));
+    }
+
+    /**
      * Method that sets the sets the valuta type
      *
      *@version 1.0
@@ -108,7 +115,14 @@ public class MainActivity extends AppCompatActivity implements SpinnerListener.S
      *@param value the value that will be shown
      */
     @Override
-    public void onConvertedValueUpdate(double value) {
-        ((EditText)findViewById(R.id.output_editTextNumberDecimal)).setText(String.format("%.2f", value));
+    public void onConvertedValueUpdate(ConvertedValuta value) {
+        ((EditText)findViewById(R.id.output_editTextNumberDecimal)).setText(String.format("%.2f", value.getToValue()));
+        valutaAdapter.add(value.Copy());
+        //valutaAdapter = new ValutaAdapter(this, mobileArray);
+
+
+        ListView listView = findViewById(R.id.list_view);
+        listView.setAdapter(valutaAdapter);
+
     }
 }
