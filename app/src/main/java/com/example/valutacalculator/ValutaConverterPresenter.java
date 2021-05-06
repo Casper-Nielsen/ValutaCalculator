@@ -41,7 +41,7 @@ public class ValutaConverterPresenter {
      */
     public ValutaConverterPresenter(View view, Context context){
         this.view = view;
-        this.currency = new LocalCurrency();
+        this.currency = new APICurrency();
         this.converter = new ValutaCalculator();
         this.current = new ConvertedValuta();
         this.dataManager = new DataBaseManager(context);
