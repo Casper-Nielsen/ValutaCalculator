@@ -86,7 +86,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Convert"
+        android:text="@string/Convert"
         android:ems="10"
         android:onClick="onConvertButtonClicked"
         app:layout_constraintEnd_toStartOf="@+id/guideline_center_vertical"
@@ -97,7 +97,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="from and to"
+        android:text="@string/col_1"
         app:layout_constraintStart_toStartOf="@+id/list_view"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
@@ -105,7 +105,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Conversion rate"
+        android:text="@string/col_2"
         app:layout_constraintEnd_toEndOf="@+id/list_view"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
@@ -119,6 +119,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"></ListView>
 
+    <Button
+        android:id="@+id/clear_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="clear"
+        android:onClick="onClearButtonCLicked"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package com.example.valutacalculator;
 
 
+import android.content.Context;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,7 @@ import java.util.List;
  * for the Valuta converter
  *
  * @author CKN
- * @version 1.0
+ * @version 1.2
  * @since 1.0
  */
 public class ValutaConverterPresenter {
@@ -18,13 +20,14 @@ public class ValutaConverterPresenter {
     private View view;
     private double value;
     private Valuta valuta;
-    private CurrencyDAO<Valuta> currencyDAO;
+    private CurrencyDAO<Valuta> currency;
+    private DataManagerDAO dataManager;
 
 
     private Valuta getValuta(){
 
         if (valuta == null){
-            valuta = currencyDAO.getRates();
+            valuta = currency.getRates();
         }
         return valuta;
     }
@@ -36,11 +39,32 @@ public class ValutaConverterPresenter {
      *@since 1.0
      *@param view is the view that will be controlled
      */
-    public  ValutaConverterPresenter(View view){
+    public ValutaConverterPresenter(View view, Context context){
         this.view = view;
-        this.currencyDAO = new LocalCurrency();
+        this.currency = new LocalCurrency();
         this.converter = new ValutaCalculator();
         this.current = new ConvertedValuta();
+        this.dataManager = new DataBaseManager(context);
+    }
+
+    /**
+     * Method to get the history
+     *
+     *@version 1.2
+     *@since 1.2
+     */
+    public List<ConvertedValuta> getHistory(){
+        return dataManager.getHistory();
+    }
+
+    /**
+     * Method to clear the history
+     *
+     *@version 1.2
+     *@since 1.2
+     */
+    public void DeleteHistory(){
+        dataManager.clearHistory();
     }
 
     /**
@@ -76,7 +100,9 @@ public class ValutaConverterPresenter {
      */
     public void convertValue(double input){
         current.setFromValue(input);
-        view.onConvertedValueUpdate(converter.convert(current));
+        current = converter.convert(current);
+        view.onConvertedValueUpdate(current);
+        dataManager.addHistory(current);
     }
 
     /**

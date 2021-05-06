@@ -112,7 +112,7 @@ public class ConvertedValuta {
         return result;
     }
 
-    public ConvertedValuta Copy(){
+    public ConvertedValuta copy(){
         return new ConvertedValuta(this.fromValuta,this.fromValutaDouble,this.fromValue,this.toValuta,this.toValutaDouble,this.toValue);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.valutacalculator;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,16 +15,22 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is for showing the ConvertedValuta
+ *
+ *@author CKN
+ *@version 1.2
+ *@since 1.1
+ */
 public class ValutaAdapter extends ArrayAdapter<ConvertedValuta> {
     private Context mContext;
     private List<ConvertedValuta> convertedValutaList;
 
-    public ValutaAdapter(@NonNull Context context, ArrayList<ConvertedValuta> list){
+    public ValutaAdapter(@NonNull Context context, List<ConvertedValuta> list){
         super(context,0,list);
         mContext = context;
         convertedValutaList = list;
     }
-
 
     /**
      * Method creates the view for selected ConvertedValuta
