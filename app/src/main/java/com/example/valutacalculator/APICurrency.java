@@ -58,7 +58,7 @@ public class APICurrency implements CurrencyDAO<Valuta> {
      */
     private void getFromApi() {
         try {
-            String key = "5f95c5b52dab7f06848e678041a702b4"; // Insert key here
+            String key = ""; // Insert key here
             String urlString = "http://data.fixer.io/api/latest?access_key=" + key;
             URL url = new URL(urlString);
 
