@@ -4,10 +4,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * This class gets the json from a string
+ * This class gets the rates from a json string
  *
  *@author CKN
- *@version 1.0
+ *@version 1.3
  *@since 1.0
  */
 public class LocalCurrency implements CurrencyDAO<Valuta> {
